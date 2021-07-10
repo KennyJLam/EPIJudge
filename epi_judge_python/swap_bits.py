@@ -6,7 +6,7 @@ def swap_bits(x, i, j):
     bits = x & mask
     if bits == 0 or bits == mask:
         return x
-    return x % mask
+    return x ^ mask
 
 
 if __name__ == '__main__':
