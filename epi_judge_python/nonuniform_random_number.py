@@ -2,6 +2,7 @@ import collections
 import functools
 import math
 from typing import List
+import random
 
 from test_framework import generic_test
 from test_framework.random_sequence_checker import run_func_with_retries
@@ -10,8 +11,13 @@ from test_framework.test_utils import enable_executor_hook
 
 def nonuniform_random_number_generation(values: List[int],
                                         probabilities: List[float]) -> int:
-    # TODO - you fill in here.
-    return 0
+    rng = random.random()
+    cum_prob = 0
+    for i in range(len(probabilities)):
+        cum_prob += probabilities[i]
+        if rng <= cum_prob:
+            break
+    return values[i]
 
 
 @enable_executor_hook
