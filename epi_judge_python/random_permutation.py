@@ -2,6 +2,7 @@ import copy
 import functools
 import math
 from typing import List
+from offline_sampling import random_sampling
 
 from test_framework import generic_test
 from test_framework.random_sequence_checker import (
@@ -10,8 +11,9 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def compute_random_permutation(n: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    ret = list(range(n))
+    random_sampling(n, ret)
+    return ret
 
 
 @enable_executor_hook
