@@ -7,6 +7,8 @@ def is_palindrome(s: str) -> bool:
     while front_idx < back_idx:
         while not s[front_idx].isalnum():
             front_idx += 1
+            if front_idx > back_idx:  # can only happen if no alpha-numeric chars in string
+                return True
         while not s[back_idx].isalnum():
             back_idx -= 1
         if s[front_idx].lower() != s[back_idx].lower():
