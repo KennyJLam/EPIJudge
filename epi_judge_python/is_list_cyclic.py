@@ -8,8 +8,26 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def has_cycle(head: ListNode) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    if head is None or head.next is None or head.next.next is None:
+        return None
+    slow, fast = head.next, head.next.next
+    while not slow is fast:
+        if fast.next is None or fast.next.next is None:
+            return None
+        slow = slow.next
+        fast = fast.next.next
+    cycle_len = 1
+    fast = slow.next
+    while not fast is slow:
+        cycle_len += 1
+        fast = fast.next
+    slow, fast = head, head
+    for i in range(cycle_len):
+        fast = fast.next
+    while not slow is fast:
+        slow = slow.next
+        fast = fast.next
+    return slow
 
 
 @enable_executor_hook
