@@ -18,16 +18,28 @@ def linked_list_len(L: ListNode) -> int:
 def cyclically_right_shift_list(L: ListNode, k: int) -> Optional[ListNode]:
     if not L:
         return None
-    len_L = linked_list_len(L)
-    mk = k % len_L
-    if mk == 0:
+    if k == 0:
         return L
     nhead = L
-    for _ in range(mk):
+    lln = 1
+    k_bigger = False
+    for _ in range(k):
         if nhead.next:
             nhead = nhead.next
+            lln += 1
         else:
-            nhead = L
+            k_bigger = True
+            break
+    if k_bigger:
+        nhead = L
+        mk = k % lln
+        if mk == 0:
+            return L
+        for _ in range(mk):
+            if nhead.next:
+                nhead = nhead.next
+            else:
+                nhead = L
     if nhead is L:
         return L
     ntail = L
