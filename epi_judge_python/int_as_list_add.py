@@ -5,8 +5,25 @@ from test_framework import generic_test
 
 
 def add_two_numbers(L1: ListNode, L2: ListNode) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    if not L1 or not L2:
+        return None
+    lsum = ListNode()
+    ltail = lsum
+    carry = 0
+    d1, d2 = L1, L2
+    while d1 or d2 or carry:
+        a1 = d1.data if d1 else 0
+        a2 = d2.data if d2 else 0
+        sum = a1 + a2 + carry
+        nd = sum % 10
+        ltail.next = ListNode(data=nd)
+        ltail = ltail.next
+        carry = sum // 10
+        if d1:
+            d1 = d1.next
+        if d2:
+            d2 = d2.next
+    return lsum.next
 
 
 if __name__ == '__main__':
