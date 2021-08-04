@@ -4,9 +4,40 @@ from list_node import ListNode
 from test_framework import generic_test
 
 
+def linked_list_len(L: ListNode) -> int:
+    if L is None:
+        return 0
+    h = L
+    lln = 1
+    while h.next:
+        h = h.next
+        lln += 1
+    return lln
+
+
 def cyclically_right_shift_list(L: ListNode, k: int) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    if not L:
+        return None
+    len_L = linked_list_len(L)
+    mk = k % len_L
+    if mk == 0:
+        return L
+    nhead = L
+    for _ in range(mk):
+        if nhead.next:
+            nhead = nhead.next
+        else:
+            nhead = L
+    if nhead is L:
+        return L
+    ntail = L
+    while nhead.next:
+        ntail = ntail.next
+        nhead = nhead.next
+    C = ntail.next
+    ntail.next = None
+    nhead.next = L
+    return C
 
 
 if __name__ == '__main__':
