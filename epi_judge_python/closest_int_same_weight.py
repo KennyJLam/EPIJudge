@@ -2,7 +2,10 @@ from test_framework import generic_test
 
 
 def closest_int_same_bit_count(x: int) -> int:
-    # TODO - you fill in here.
+    if x & 1 == 0:
+        return x ^ ((x & ~(x - 1)) | ((x & ~(x - 1)) >> 1))
+    else:
+        return x ^ ((~x & ~(~x - 1)) | ((~x & ~(~x - 1)) >> 1))
     return 0
 
 
