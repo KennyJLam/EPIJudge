@@ -12,8 +12,22 @@ def zero_one_random():
 
 
 def uniform_random(lower_bound: int, upper_bound: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    if lower_bound == upper_bound:
+        return lower_bound
+    range_len = upper_bound - lower_bound + 1
+    bit_count, num_bits = range_len - 1, 0
+    while bit_count:
+        num_bits += 1
+        bit_count >>= 1
+
+    while True:
+        sample = 0
+        for _ in range(num_bits + 1):
+            sample <<= 1
+            bit = zero_one_random()
+            sample |= bit
+        if sample < range_len:
+            return lower_bound + sample
 
 
 @enable_executor_hook
