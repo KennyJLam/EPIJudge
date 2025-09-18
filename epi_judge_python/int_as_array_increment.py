@@ -11,7 +11,12 @@ def plus_one(A: List[int]) -> List[int]:
             break
         i -= 1
     if A[0] == 0:
-        A.insert(0, 1)
+        # A.insert(0, 1)
+        # Clever trick from book.  Finally carry can only happen with all 9's.
+        # So final value will always be a power of 10, and current array will always
+        # Just be all 0's.  So just set MSD to 1 and append 0 for O(1) operation.
+        A.append(0)
+        A[0] = 1
     return A
 
 
