@@ -2,28 +2,42 @@ from typing import List
 
 from test_framework import generic_test
 
-# Add nums2 into num1
-def add(num1, num2, pow):
-    carry = 0
-    for i in range(len(num2)):
-        dsum = num2[i] + num1[i] + carry
-        num1[i] = dsum % 10
-        carry = 1 if dsum >= 10 else 0
-    i = len(num2)
-    while carry == 1 and i < len(num1):
-        carry = 1 if num1[i] == 9 else 0
-        num1[i] = (num1[i] + 1) % 10
-        i += 1
-    if carry == 1:
-        num1.append(1)
 
 
 def multiply(num1: List[int], num2: List[int]) -> List[int]:
-    if len(num1) < len(num2):
-        num1, num2 = num2, num1
-    num1, num2 = list(reversed(num1)), list(reversed(num2))
-
-    return []
+    n, m = len(num1), len(num2)
+    prod = [0]*(n + m)
+    sign_mult = 1
+    if num1[0] < 0:
+        num1[0] *= -1
+        sign_mult *= -1
+    if num2[0] < 0:
+        num2[0] *= -1
+        sign_mult *= -1
+    for i in range(m - 1, -1, -1):
+        mult = num2[i]
+        carry = 0
+        prod_idx = None
+        for j in range(n - 1, -1, -1):
+            dp = mult * num1[j]
+            prod_idx = n + m - (m - i - 1) - (n - j - 1) - 1
+            prod[prod_idx] +=  dp + carry
+            carry = prod[prod_idx] // 10
+            prod[prod_idx] %= 10
+        while carry > 0:
+            prod_idx -= 1
+            prod[prod_idx] += carry
+            carry = prod[prod_idx] // 10
+            prod[prod_idx] %= 10
+    zero_idx = 0
+    while zero_idx < len(prod) and prod[zero_idx] == 0:
+        zero_idx += 1
+    if zero_idx == len(prod):
+        prod = prod[-1:]
+    else:
+        prod = prod[zero_idx:]
+    prod[0] *= sign_mult
+    return prod
 
 
 if __name__ == '__main__':
