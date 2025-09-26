@@ -8,9 +8,16 @@ from test_framework.random_sequence_checker import (
 from test_framework.test_utils import enable_executor_hook
 
 
+import random
+
 def random_subset(n: int, k: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    subset = []
+    swap_cache = {}
+    for i in range(k):
+        rng = random.randrange(i, n)
+        subset.append(swap_cache[rng] if rng in swap_cache else rng)
+        swap_cache[rng] = i if i not in swap_cache else swap_cache[i]
+    return subset
 
 
 @enable_executor_hook
