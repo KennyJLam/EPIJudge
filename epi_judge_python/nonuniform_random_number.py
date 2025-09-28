@@ -8,10 +8,21 @@ from test_framework.random_sequence_checker import run_func_with_retries
 from test_framework.test_utils import enable_executor_hook
 
 
+import random
+
 def nonuniform_random_number_generation(values: List[int],
                                         probabilities: List[float]) -> int:
-    # TODO - you fill in here.
-    return 0
+    sum_p = 0
+    cdf = []
+    for p in probabilities:
+        sum_p += p
+        cdf.append(sum_p)
+
+    rng = random.random()
+    for i,d in enumerate(cdf):
+        if rng <= d:
+            return values[i]
+    return values[-1]
 
 
 @enable_executor_hook
