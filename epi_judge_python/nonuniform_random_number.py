@@ -9,6 +9,21 @@ from test_framework.test_utils import enable_executor_hook
 
 
 import random
+import bisect
+
+# def nonuniform_random_number_generation(values: List[int],
+#                                         probabilities: List[float]) -> int:
+#     sum_p = 0
+#     cdf = []
+#     for p in probabilities:
+#         sum_p += p
+#         cdf.append(sum_p)
+#
+#     rng = random.random()
+#     for i,d in enumerate(cdf):
+#         if rng <= d:
+#             return values[i]
+#     return values[-1]
 
 def nonuniform_random_number_generation(values: List[int],
                                         probabilities: List[float]) -> int:
@@ -19,10 +34,7 @@ def nonuniform_random_number_generation(values: List[int],
         cdf.append(sum_p)
 
     rng = random.random()
-    for i,d in enumerate(cdf):
-        if rng <= d:
-            return values[i]
-    return values[-1]
+    return values[bisect.bisect_left(cdf, rng)]
 
 
 @enable_executor_hook
