@@ -4,7 +4,16 @@ from test_framework import generic_test
 
 
 def rotate_matrix(square_matrix: List[List[int]]) -> None:
-    # TODO - you fill in here.
+    n = len(square_matrix)
+    sub_n = n
+    while sub_n > 1:
+        offset = (n - sub_n) // 2
+        for i in range(sub_n - 1):
+            (square_matrix[offset][i + offset], square_matrix[i + offset][n - offset - 1],
+             square_matrix[n - offset - 1][n - offset - 1 - i], square_matrix[n - offset - 1 - i][offset]) \
+                = (square_matrix[n - offset - 1 - i][offset], square_matrix[offset][i + offset], square_matrix[i + offset][n - offset - 1],
+                   square_matrix[n - offset - 1][n - offset - 1 - i])
+        sub_n -= 2
     return
 
 
